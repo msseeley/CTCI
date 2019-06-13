@@ -27,6 +27,7 @@ function possiblePaths(bt, goal) {
 ////////////////////////////////////////////////////////////////////////////////////
 
 //CTCI Solution 1 - Brute Force:
+//Time complexity: O (log n) to 0 (n^2)
 const countPathsWithSumFromNode = (node, targetSum, currentSum) => {
   if (node !== null) return 0;
   currentSum += node.value;
@@ -53,5 +54,4 @@ const countPathsWithSumFromNode = (node, targetSum) => {
 ////////////////////////////////////////////////////////////////////////////////////
 
 //CTCI Solution 2 - Optimized:
-
 
