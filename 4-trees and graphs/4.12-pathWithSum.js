@@ -54,4 +54,24 @@ const countPathsWithSumFromNode = (node, targetSum) => {
 ////////////////////////////////////////////////////////////////////////////////////
 
 //CTCI Solution 2 - Optimized:
+//Time Complexity:  O (N)
 
+//const frequencies = {runningSum: frequency}
+const incrementFrequencies = (frequencies = {}, key, occurences) => {
+  frequencies[key] ? frequencies[key] += occurences : frequencies[key] = occurences;
+  if (frequencies[key] === 0) delete frequencies[key];
+}
+
+const countPathsWithSum = (node, targetSum, runningSum, freqencies) => {
+  if (node === null) return 0;
+  runningSum += node.value;
+  let sum = runningSum - targetSum;
+  let totalPaths = frequencies[sum];
+  if (runningSum === targetSum) { //a path from the root to current Node === targetSum
+    totalPaths++
+  }
+  incrementFrequencies(frequencies, runningSum, 1);
+  totalPaths += countPathsWithSum(node.left, targetSum, runningSum, frequencies);
+  totalPaths += countPathsWithSum(node.right, targetSum, runningSum, frequencies);
+  incrementFrequencies(frequencies, runningSum, -1);
+}
