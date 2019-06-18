@@ -57,12 +57,12 @@ const countPathsWithSumFromNode = (node, targetSum) => {
 //Time Complexity:  O (N)
 
 //const frequencies = {runningSum: frequency}
-const incrementFrequencies = (frequencies = {}, key, occurences) => {
+const incrementFrequencies = (frequencies, key, occurences) => {
   frequencies[key] ? frequencies[key] += occurences : frequencies[key] = occurences;
   if (frequencies[key] === 0) delete frequencies[key];
 }
 
-const countPathsWithSum = (node, targetSum, runningSum, freqencies) => {
+const countPathsWithSum = (node, targetSum, runningSum, frequencies = {}) => {
   if (node === null) return 0;
   runningSum += node.value;
   let sum = runningSum - targetSum;
@@ -74,4 +74,5 @@ const countPathsWithSum = (node, targetSum, runningSum, freqencies) => {
   totalPaths += countPathsWithSum(node.left, targetSum, runningSum, frequencies);
   totalPaths += countPathsWithSum(node.right, targetSum, runningSum, frequencies);
   incrementFrequencies(frequencies, runningSum, -1);
+  return totalPaths;
 }
