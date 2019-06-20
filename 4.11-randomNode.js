@@ -49,9 +49,9 @@ class Node {
   }
   insertInOrder(data) {
     if (data <= this.data) {
-      this.left === null ? this.left = new Node(data) : this.left.insertBefore(data)
+      this.left === null ? this.left = new Node(data) : this.left.insertInOrder(data);
     } else {
-      this.right.insertInOrder(data)
+      this.right === null ? this.right = new Node(data) : this.right.insertInOrder(data);
     }
     this.size++;
   }
@@ -67,22 +67,7 @@ class Node {
       return this.right.getIthNode(i - (leftSize + 1));
     }
   }
-}
-
-class BinaryTree {
-  constructor(node) {
-    this.root = node || null;
-    this.size = this.root === null ? 0 : root.size();
-  }
-  insertInOrder(data) {
-    if (this.root === null) this.root = new Node(data);
-    else root.insertInOrder(data)
-  }
-  getRandomNode() {
-    if (this.root === null) return null;
-    const num = Math.random(this.size);
-    return this.root.getIthNode(num);
-  }
+  //put the find on the node makes it easier to use .left.find given that nodes are not considered trees w/ tree method.
   find(d) {
     if (this.data === d) return this;
     if (this.data >= d) {
@@ -93,4 +78,21 @@ class BinaryTree {
     }
     return null; //in the case the d is not a valid input??
   }
+}
+
+class BinaryTree {
+  constructor(node) {
+    this.root = node || null;
+    this.size = this.root === null ? 0 : root.size;
+  }
+  insertInOrder(data) {
+    if (this.root === null) this.root = new Node(data);
+    else root.insertInOrder(data)
+  }
+  getRandomNode() {
+    if (this.root === null) return null;
+    const num = Math.random(this.size);
+    return this.root.getIthNode(num);
+  }
+
 }
