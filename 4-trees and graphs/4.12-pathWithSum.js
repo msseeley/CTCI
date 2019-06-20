@@ -56,11 +56,27 @@ const countPathsWithSumFromNode = (node, targetSum) => {
 //CTCI Solution 2 - Optimized:
 //Time Complexity:  O (N)
 
-//const frequencies = {runningSum: frequency}
-const incrementFrequencies = (frequencies, key, occurences) => {
+/*
+Notes:
+
+  frequencies map - used to store the sum of the nodes going through a path. It is a hashtable or js object/map. It's key:values are sum up to that node : number of occurences that sum has.
+
+  incrementFrequencies - function that can construct/update the frequencies map.
+
+  node - represents a node on a tree, which in itself can be a subtree.
+
+  targetSum - the given value to search for possible pathways that add up to the sum.
+
+  runningSum - the currentSum cummulatively adding each node as it goes through the tree.
+
+  by subtracting the targetSum from the running sum and cross checking the difference with the frequency map of running sums available, positive matches in the frequency map are possible paths and the number of times these running sums are available. These matches are tabulated with totalPaths.
+
+*/
+const incrementFrequencies = (frequencies = {}, key, occurences) => {
   frequencies[key] ? frequencies[key] += occurences : frequencies[key] = occurences;
   if (frequencies[key] === 0) delete frequencies[key];
 }
+
 
 const countPathsWithSum = (node, targetSum, runningSum, frequencies = {}) => {
   if (node === null) return 0;
