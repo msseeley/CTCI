@@ -37,8 +37,20 @@ class BinaryTree {
   }
 }
 
-//CTCI Solution #7-- optimizied:
-//Time Complexity: O (log N) to O (D) *where D is depth/height of tree
+/*
+CTCI Solution #7 -- optimizied:
+Time Complexity: O (log N) to O (D) where D is depth/height of tree
+
+Node -- class constructore for node data, with standard left and right properties that refer to possible other nodes.
+  *size -- refers to the number of nodes that are decendent nodes, includes the node itself.
+
+getRandomNode() -- generates a random number based on the size of the node. The size is the number of possible nodes to choose from (0 indexed). The random number is then passed to the node method getIthNode which finds a node whose size matches that random number.
+
+getIthNode(i) -- takes a random number (i), which is a 0 - number of available nodes (exclusive), and finds the node that fits that randomly generated number.
+  *leftSize -- is assigned to a number based on its size, which is used to compare to i. leftSizze provides the numbering system for the nodes to help determine finding i.
+  This could have been done with the right instead of the left. What matters is it provides a numbering system to either go left, right, or current in choosing a node -- and therefore allows a randomly chosen node to be returned.
+
+*/
 
 class Node {
   constructor(d, l, r, s) {
@@ -90,7 +102,7 @@ class BinaryTree {
     else root.insertInOrder(data)
   }
   getRandomNode() {
-    if (this.root === null) return null;
+    if (this.root === null) return null; //accounts for possibility that tree/root is empty/null
     const num = Math.random(this.size);
     return this.root.getIthNode(num);
   }
