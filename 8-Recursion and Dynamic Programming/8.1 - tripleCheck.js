@@ -23,22 +23,33 @@ function tripleStepRecursive(stairs) {
 
 //Memoized Time commlexity: O (n)
 
-function tripleStepMemoized(stairs, successful = {}) {
-  if (successful[stairs]) return successful[stairs];//if count has already been memoized return that count
+function tripleStepRecursiveMemoized(stairs, memo = {}) {
+  if (memo[stairs]) return memo[stairs];
+  let count = 0;
   for (let steps = 1; steps < 4; steps++) { //for-loop represents the number of possible hopped steps (1,2,3)
     let diff = stairs - steps; // diff represents the number of steps left after a hop
-    if (diff === 0) successful[diff] += 1; //memoizes successful interval with the proper count
-    if (diff < 0) return; // if we exceed the steps and the counter is going up we don't want to preserve the count or keep going with this itteration? Maybe we just want to return?
-    successful[stairs] += tripleStepRecursiveMemoized(diff, successful);
+    if (diff === 0) {
+      count += 1;
+      break;
+    } //the hops have successfully climbed the stairs - possible way of moving up
+    if (diff < 0) break; //exceeded the number of stairs - not a possible way of moving up
+    count += tripleStepRecursiveMemoized(diff, memo); //if there's left over path is incomplete and still might be possible -- recurse to calculate
   }
-  return successful[stairs];
+  memo[stairs] = count;
+  return count; //return the final count after the loop has completely gone throug heach possibility
 }
 
 
 
-//Iterative
-function tripleStepIterative(stairs) {
 
+//Iterative
+//start with a cache of the smallest values you know, then use that to get larger values
+function tripleStepIterative(stairs) {
+  let cache = { 0: 1, 1: 1, 2: 2 };
+  for (let n = 3; n <= stairs; n++) {
+    cache[n] = cache[n - 1] + cache[n - 2] + cache[n - 3]
+  }
+  return cache[stairs]
 }
 
 
