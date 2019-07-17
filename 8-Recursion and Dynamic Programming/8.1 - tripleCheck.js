@@ -21,9 +21,9 @@ function tripleStepRecursive(stairs) {
 }
 
 
-//Time commlexity: O (n)
+//Memoized Time commlexity: O (n)
 
-function tripleStepRecursiveMemoized(stairs, successful = {}) {
+function tripleStepMemoized(stairs, successful = {}) {
   if (successful[stairs]) return successful[stairs];//if count has already been memoized return that count
   for (let steps = 1; steps < 4; steps++) { //for-loop represents the number of possible hopped steps (1,2,3)
     let diff = stairs - steps; // diff represents the number of steps left after a hop
@@ -33,6 +33,14 @@ function tripleStepRecursiveMemoized(stairs, successful = {}) {
   }
   return successful[stairs];
 }
+
+
+
+//Iterative
+function tripleStepIterative(stairs) {
+
+}
+
 
 /*
 CTCI Solution Brute Force:
