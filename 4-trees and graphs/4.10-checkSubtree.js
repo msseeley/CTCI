@@ -6,7 +6,7 @@ T1 and T2 are two very large binary trees, with T1 being much bigger than T2. Cr
 
 
 //My Solution:
-//Time complexity: O (n * m)
+//Time complexity: O (n * km) k is the number of times we find matching nodes.
 
 function checkSubtree(lT, sT) {
   const larger = lT.traverse();
@@ -30,9 +30,29 @@ function matching(t1, t2) {
 }
 
 //creating a method for the tree, generator function for traversal
-//makes it lazy so it's possible to go through the tree and keep trying
+//makes it lazy so it only provides the next value if it needs to
 traverse(){
   yield this;
   if (this.left) yield * this.left.traverse();
   if (this.right) yield * this.right.traverse();
+}
+
+
+//CTCI Simple Solution:
+//Run Time: O (n + m)
+
+//Stringbuilder creates a resizeable array of all the strings copying them back to a string only when necessary.
+
+const stringBuilder = (sentence) => {
+  const resizeableArr = [];
+  for (let char of sentence) {
+    resizeableArr.push(sentence);
+  }
+  return resizeableArr.toString();
+}
+
+const getOrderString = (node, )
+
+function containsTree(T1, T2) {
+  firstStr =
 }
