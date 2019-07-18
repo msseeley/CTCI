@@ -25,28 +25,37 @@ function findPath(grid, pos = { r: 0, c: 0 }, path = []) {
   return right || down
 }
 
+//getters allow you to say I'm actually accessing function while calling it like a property ** can look up **
+
 class Cell {
   constructor(grid, row, column) {
     this.grid = grid;
     this.row = row;
     this.column = column;
   }
-  right() {
+  get right() {
     return new Cell(this.grid, this.row, 1 + this.column);
   }
-  down() {
+  get down() {
     return new Cell(this.grid, 1 + this.row, this.column);
   }
-  value() {
+  get value() {
     return this.grid[this.row] && this.grid[this.row][this.column];
   }
+  get isEnd() {
+    return this.right.value === undefined && this.down.value === undefined;
+  }
+  get isValidStep() {
+    return this.value === 0;
+  }
   findPath(path = []) {
-    const value = this.value();
-    if (value === undefined || value === 1) return undefined;
-    const right = this.right();
-    const down = this.down();
-    if (right.value() === undefined && down.value() === undefined) return path;
-    return right.findPath(path.concat('right')) || down.findPath(path.concat('down'));
+    if (!this.isValidStep) return undefined;
+    if (this.isEnd) return path;
+    return (
+      this.right.findPath([...path, 'right'])
+      ||
+      this.down.findPath([...path, 'down'])
+    );
   }
 }
 
