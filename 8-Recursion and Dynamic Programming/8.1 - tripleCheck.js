@@ -40,8 +40,6 @@ function tripleStepRecursiveMemoized(stairs, memo = {}) {
 }
 
 
-
-
 //Iterative
 //start with a cache of the smallest values you know, then use that to get larger values
 function tripleStepIterative(stairs) {
