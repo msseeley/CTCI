@@ -25,7 +25,7 @@ function findPath(grid, pos = { r: 0, c: 0 }, path = []) {
   return right || down
 }
 
-//getters allow you to say I'm actually accessing function while calling it like a property ** can look up **
+//getters allow you to say I'm actually accessing function while calling it like a property ** can look up
 
 class Cell {
   constructor(grid, row, column) {
@@ -62,3 +62,57 @@ class Cell {
 const findPath = (grid) => {
   return new Cell(grid, 0, 0).findPath();
 };
+
+//CTCI solution unoptimized:
+//Time Complexity: O(2^r+c)
+//I'm assuming the invalid paths  here are marked with 0s and valids are 1.
+
+
+function getPath(grid, row, col, path) {
+  if (col < 0 || row < 0 || !grid[row][col]) { //check to make sure row,col, and placement are on the board/valid
+    return false;
+  }
+  let atOrigin = (row === 0) && (col === 0); //0,0 coordinate would be origin point
+  if (atOrigin || getPath(grid, row, col - 1, path) || getPath(grid, row - 1, col, path)) {
+    path.push([row, col]); //?????? how does the final path not get overwritten or confused with multiple possibilities?
+    return true;
+  }
+  return false;
+}
+
+function pathfinder(grid) {
+  if (grid === null || grid.length === 0) return null;
+  let path = [];
+  if (getPath(grid, grid.length - 1, grid[0].length - 1, path)) { //starts w/lower right corner
+    return path;
+  }
+  return null;
+}
+
+
+//CTCI solution optimized w/memoization:
+//Run Time: O(rc)
+
+function getPath(grid, row, col, path, failedPoints) {
+  if (col < 0 || row < 0 || !grid[row][col]) return false;
+  const coordKey = `${row}${col}`
+  if (failedPoints.has(coordKey)) return false;
+  let atOrigin = (row === 0) && (col === 0); //0,0 coordinate would be origin point
+  if (atOrigin || getPath(grid, row, col - 1, path) || getPath(grid, row - 1, col, path)) {
+    path.push([row, col])
+    return true;
+  }
+  failedPoints.add(coordKey);
+  return false;
+}
+
+function pathfinder(grid) {
+  let failedPoints = new Set();
+  if (grid === null || grid.length === 0) return null;
+  let path = [];
+  if (getPath(grid, grid.length - 1, grid[0].length - 1, path, failedPoints)) { //starts w/lower right corner
+    return path
+  }
+  return null
+}
+
