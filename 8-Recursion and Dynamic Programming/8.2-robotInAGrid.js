@@ -4,10 +4,10 @@
 */
 /*
   [
-    [0, X , X , 0 , 0],
-    [0, 0 , 0 , 0 , 0],
-    [0, 0 , 0 , 0 , 0],
-    [0, X , 0 , 0 , 0]
+    [0, 0 , 0, 0 , 0],
+    [0, 0 , 1, 0 , 0],
+    [0, 0 , 1, 1 , 0],
+    [0, 1 , 0, 1 , 1]
   ]
 */
 
@@ -16,7 +16,7 @@
 
 function findPath(grid, pos = { r: 0, c: 0 }, path = []) {
   const current = grid[pos.r] ? grid[pos.r][pos.c] : null;
-  if (current === "X" || current === undefined) return;
+  if (!current || current === undefined) return;
   if (pos.r === grid.length - 1 && pos.c === grid[0].length) return path;
   let rightPath = path.concat('right')
   const right = findPath(grid, { r: pos.r, c: pos.c + 1 }, rightPath)
@@ -69,12 +69,12 @@ const findPath = (grid) => {
 
 
 function getPath(grid, row, col, path) {
-  if (col < 0 || row < 0 || !grid[row][col]) { //check to make sure row,col, and placement are on the board/valid
+  if (col < 0 || row < 0 || !grid[row][col]) { //check to make sure row, col, and placement are on the board/valid
     return false;
   }
   let atOrigin = (row === 0) && (col === 0); //0,0 coordinate would be origin point
   if (atOrigin || getPath(grid, row, col - 1, path) || getPath(grid, row - 1, col, path)) {
-    path.push([row, col]); //?????? how does the final path not get overwritten or confused with multiple possibilities?
+    path.push([row, col]);
     return true;
   }
   return false;
@@ -92,14 +92,21 @@ function pathfinder(grid) {
 
 //CTCI solution optimized w/memoization:
 //Run Time: O(rc)
+/*
+ [
+   [1,1],
+   [1,1]
+ ]
+
+*/
 
 function getPath(grid, row, col, path, failedPoints) {
   if (col < 0 || row < 0 || !grid[row][col]) return false;
-  const coordKey = `${row}${col}`
+  const coordKey = `${row},${col}`
   if (failedPoints.has(coordKey)) return false;
   let atOrigin = (row === 0) && (col === 0); //0,0 coordinate would be origin point
-  if (atOrigin || getPath(grid, row, col - 1, path) || getPath(grid, row - 1, col, path)) {
-    path.push([row, col])
+  if (atOrigin || getPath(grid, row, col - 1, path) || getPath(grid, row - 1, col, path)) { // or statments prevent overlap/over righting of path
+    path.push(coordKey)
     return true;
   }
   failedPoints.add(coordKey);
