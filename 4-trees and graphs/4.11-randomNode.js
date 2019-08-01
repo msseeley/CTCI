@@ -15,8 +15,8 @@ class BinaryTree {
     this.idx = 0;
   }
 
-  insert(n) {
-    n.idx = this.all.push(n.d) - 1; //this.all.push(n) returns array length, -1 gets the idx of the element
+  insert(node) {
+    node.idx = this.all.push(node.data) - 1; //this.all.push(node.data) returns array length, -1 gets the idx of the element
     //rest of standard insert method
   }
 

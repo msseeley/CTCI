@@ -24,12 +24,12 @@ function generateSets(idx, nums, current, subsets) {
 ///iterative
 
 function generatePowerSet(array) {
-  var subsets = [[]]; //initializing empty array, bc that will always be part of the subsets
+  const subsets = [[]]; //initializing empty array, bc that will always be part of the subsets
   for (let e of array) { //go through each element of the array
     for (let i = 0; i < subsets.length; i++) { //we iterate through the current subsets we have accumulated
       const currentSubset = subsets[i];
-      subsets.push(currentSubset.concat(e)) // add to each subset, the concatenated element, and add that to the accumulated subsets
+      subsets.push(currentSubset.concat(e)); // add to each subset, the concatenated element, and add that to the accumulated subsets
     }
   }
-  return subsets
+  return subsets;
 }
