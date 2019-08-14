@@ -4,6 +4,8 @@ Write a recursive function to multiply two positive integers without using the *
 */
 
 function recursiveMultiply(n, m) {
-
+  if (m === 0) return 0;
+  if (m === 1) return n;
+  return recursiveMultiply(n + n, Math.floor(m / 2)) + recursiveMultiply(n, m % 2)
 }
 
