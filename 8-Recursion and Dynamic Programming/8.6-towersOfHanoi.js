@@ -9,9 +9,9 @@
   Write an algorithm that moves disks from the first tower to the last (third) tower.
 */
 
-class Tower {
-  constructor(num, disks) {
-    this.tower = new Array(num); //assuming the disks are already sorted greatest to smallest
+class Stack {
+  constructor(numDisks) {
+    this.tower = new Array(numDisks); //assuming the disks are already sorted greatest to smallest
   }
   peek() {
     return this.tower.length > 0 ? this.tower[tower.length - 1] : this.tower[0];
@@ -25,10 +25,10 @@ class Tower {
 }
 
 class HanoiTowers {
-  constructor(n, disks) {
+  constructor(numDisks) {
     this.towers = [];
     for (let i = 1; i <= 3; i++) {
-      this.towers.push(new Tower(n))
+      this.towers.push(new Stack(numDisks))
     }
   }
   remove(tower) {
@@ -39,9 +39,18 @@ class HanoiTowers {
     if (tower.peek() > disk || tower.peek() === undefined) tower.add(disk)
     else throw Error('Cannot place a larger disk on a smaller disk')
   }
-  moveTopTo(tower) {
-    const top =
+  moveTopTo(destination, origin) {
+    const top = origin.pop();
+    destination.add(top);
   }
+
+  moveDisks(numDisks, origin, destination, via) {
+    if (numDisks <= 0) return;
+    this.moveDisks(numDisks - 1, origin, via, destination) //moves top disks all but the bottom (ie n-1) to the buffer 'via'
+    this.moveTop(origin, destination) //moves the remaining disk to the destination, by pullin the now top of that stack
+    this.moveDisks(numDisks - 1, via, destination, origin) //moves remaining disks in the buffer to
+  }
+
 }
 
 
