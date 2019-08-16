@@ -7,16 +7,16 @@
 //recursive
 
 function powerSet(set) {
-  const subsets = [];
+  const subsets = []; //holds all subsets
   generateSets(0, set, [], subsets);
   return subsets
 }
 
 function generateSets(idx, nums, current, subsets) {
-  subsets.push(current);
-  for (let i = idx; i < nums.length; i++) {
-    current.push(nums[i]) // adding to current subset
-    generateSets(i + 1, nums, current, subsets)
+  subsets.push(current);//pushes the current subset, which is initially an empty array
+  for (let i = idx; i < nums.length; i++) { // loops through the nums (initially the set that is given)
+    current.push(nums[i]) // adding to current subset starting at the given index
+    generateSets(i + 1, nums, current, subsets) // iterates to the next index
     current.pop()
   }
 }
@@ -33,3 +33,7 @@ function generatePowerSet(array) {
   }
   return subsets;
 }
+
+// ^ as we loop over the array of values given to us, for each value we then loop over our subset array.
+// the subset array values are then added to
+// what we add is a modified version of the subsets value (subsetValue + the value of the array)
