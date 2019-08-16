@@ -1,3 +1,9 @@
+/*
+  Permutations Without Duplicates & Permutations With Duplicates:
+  Write a method to compute all permutations of a string of unique characters.
+  Write a method to compute all permutations of a string of characters (that may have duplicates)
+*/
+
 const permute = (str) => {
   if (str.length < 2) return [str];
   const permutations = [];
